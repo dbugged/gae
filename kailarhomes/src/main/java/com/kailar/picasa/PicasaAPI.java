@@ -1,4 +1,4 @@
-package com.bytemeagain.picasa;
+package com.kailar.picasa;
 
 
 import java.io.IOException;

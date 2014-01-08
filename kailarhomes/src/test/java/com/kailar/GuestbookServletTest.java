@@ -24,6 +24,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.appengine.tools.development.testing.LocalUserServiceTestConfig;
+import com.kailar.controller.GuestbookServlet;
 
 import org.junit.After;
 import org.junit.Before;

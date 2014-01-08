@@ -30,6 +30,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.kailar.controller.SignGuestbookServlet;
 
 import org.junit.After;
 import org.junit.Before;

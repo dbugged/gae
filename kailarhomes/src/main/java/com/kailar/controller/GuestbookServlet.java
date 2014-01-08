@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kailar;
+package com.kailar.controller;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
