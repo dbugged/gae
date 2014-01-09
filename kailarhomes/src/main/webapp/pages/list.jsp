@@ -1,7 +1,7 @@
 <html>
 <body>
-	<h1>Spring controller</h1>
+	<h1>Spring Controller v3</h1>
  
-	<h3>E-mail ID : ${email}</h3>	
+	<h3>E-mail Successfully Sent to : ${email}</h3>	
 </body>
 </html>
