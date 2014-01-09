@@ -12,12 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SpringController {
 	
 	@RequestMapping(value="/{emailId}", method = RequestMethod.GET)
-	public String getMailDetails(@PathVariable String emailId, ModelMap model) {
- 
+	public String getMovie(@PathVariable String emailId, ModelMap model) {
 		model.addAttribute("email", emailId);
- 
-		//return to jsp page, configured in mvc-dispatcher-servlet.xml, view resolver
 		return "list";
- 
 	}
 }
