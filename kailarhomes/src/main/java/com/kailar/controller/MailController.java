@@ -3,6 +3,7 @@ package com.kailar.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.mail.Address;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,11 +33,19 @@ public class MailController {
 	private Session session = Session.getDefaultInstance(props, null);	
 
 	@RequestMapping(value= "/autoReply", method = RequestMethod.POST)
-	public String automaticMailReply(HttpServletRequest request, 
-			@RequestParam(value="name", required=false) String name, 
-			@RequestParam(value="description", required=false) String description, 
-			@RequestParam(value="email", required=false) String email, HttpServletResponse response) throws IOException{
+	public String automaticMailReply(
+			HttpServletRequest request,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "description", required = false) String description,
+			@RequestParam(value = "email", required = false) String email,
+			HttpServletResponse response, ModelMap model) throws IOException {
 
+		//For error handling
+		model.addAttribute("email", email);
+		model.addAttribute("adminMail", MailConstants.KAILAR_HOMES_EMAIL);
+		model.addAttribute("description",description);
+		model.addAttribute("name",name);
+		
 		/******** E-Mail ********/
 		try {
 			//Sending automated response to the user!
@@ -44,8 +54,9 @@ public class MailController {
 			sendMailToAdmin(name,email,description);
 			logger.info("Mail sent to : '"+email+"' and admin!");
 		} catch (Exception e) {
-			//TODO: Handle exceptions
-			return "redirect:../";
+			//To redirect the request to the error handling page	
+			logger.log(Level.SEVERE, "Automated e-mail failed from : "+email);
+			return "email-error";
 		}
 		/******** E-Mail ********/
 		
@@ -54,6 +65,7 @@ public class MailController {
 	}
 
 
+	//Send a mail to the user
 	private void sendUserResponseMail(String name, String email) throws Exception{
 		//TODO: Use velocity templates for this mail
 		StringBuilder strBuilder = new StringBuilder();
@@ -66,7 +78,7 @@ public class MailController {
 		strBuilder.append("\t Thank you for contacting us! We will get back to you soon.\n");
 		strBuilder.append("\t Have a nice day!!!\n");
 		strBuilder.append(MailConstants.ADMIN_SALUTATION);
-		strBuilder.append("\n\nNote: This is an automated mail, please do not reply!");
+		strBuilder.append(MailConstants.AUTOMATED_MAIL_NOTE);
 		String msgBody = strBuilder.toString();
 
 		Message msg = new MimeMessage(session);
@@ -79,13 +91,16 @@ public class MailController {
 		Transport.send(msg);
 	}
 
+	//Send a mail to the admin
 	private void sendMailToAdmin(String name, String email, String description) throws Exception{
 		//TODO: Use velocity templates for this mail
 		StringBuilder strBuilder = new StringBuilder("Hello,");
 		strBuilder.append("\n\t Congratulations you have got mail from "+name+".");
 		strBuilder.append("\n\t E-mail ID : "+email);
-		strBuilder.append("\n\t ############## "+name+" wrote ############## \n\n"+description);
-		strBuilder.append("\n"+MailConstants.ADMIN_SALUTATION);
+		strBuilder.append("\n\t ############## "+name+" wrote ############## \n");
+		strBuilder.append("\n"+description);
+		strBuilder.append("\n\t "+MailConstants.ADMIN_SALUTATION);
+		strBuilder.append(MailConstants.AUTOMATED_MAIL_NOTE);
 		String msgBody = strBuilder.toString();
 
 		Message msg = new MimeMessage(session);
@@ -100,12 +115,14 @@ public class MailController {
 		Transport.send(msg);
 	}
 
+	//Returns a list of stake holder addresses
 	private Address[] getAdminList() throws UnsupportedEncodingException{
+		//Move this to a properties file
 		InternetAddress[] adminArray = new InternetAddress[4];
-		adminArray[0] = new InternetAddress("hb.shashidhar@gmail.com", "Shashidhar HB");
-		adminArray[3] = new InternetAddress("harikesh85@gmail.com", "Harikesh Halemane");
+		adminArray[0] = new InternetAddress("harikesh85@gmail.com", "Harikesh Halemane");
 		adminArray[1] = new InternetAddress("baggubhat@gmail.com", "Bhagavan Kailar Bhat");
-		adminArray[2] = new InternetAddress("balish.c@rediffmail.com", "Balish");
+		adminArray[2] = new InternetAddress("balish.c@gmail.com", "Balish");
+		adminArray[3] = new InternetAddress("hb.shashidhar@gmail.com", "Shashidhar HB");
 		return adminArray;
 	}
 
