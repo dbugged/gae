@@ -17,6 +17,7 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
+		<script type="text/javascript" src="js/facebook.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -26,7 +27,25 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
 	</head>
 	<body>
-
+		<!-- FB Root Goes Here -->
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1392196911029810";
+		  fjs.parentNode.insertBefore(js, fjs);
+		 }(document, 'script', 'facebook-jssdk'));
+		</script>
+		<!-- Google Plus js Load -->
+		<script type="text/javascript">
+		  (function() {
+		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		    po.src = 'https://apis.google.com/js/plusone.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		  })();
+		</script>
+						
 		<!-- Header -->
 			<div id="header" class="skel-panels-fixed">
 
@@ -56,7 +75,8 @@
 					<!-- Social Icons -->
 						<ul class="icons">
 							<li><a href="#" class="fa fa-twitter solo"><span>Twitter</span></a></li>
-							<li><a href="#" class="fa fa-facebook solo"><span>Facebook</span></a></li>
+							<li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fkailarhomes.appspot.com"
+							 class="fa fa-facebook solo" target="_blank"><span>Facebook</span></a></li>
 							<!-- <li><a href="#" class="fa fa-github solo"><span>Github</span></a></li>
 							<li><a href="#" class="fa fa-dribbble solo"><span>Dribbble</span></a></li> -->
 							<li><a href="#contact" id="mail-link" class="fa fa-envelope solo skel-panels-ignoreHref"><span>Email</span></a></li>
@@ -203,16 +223,17 @@
 
 		<!-- Footer -->
 			<div id="footer">
-				
 				<!-- Copyright -->
 					<div class="copyright">
 						<p>&copy; 2014 Kailar Homes. All rights reserved.</p>
-						<!-- <ul class="menu">
-							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							<li>Images: <a href="https://facebook.com/cloudink">Felicia Simion</a></li>
-						</ul> -->
+						
+						<ul class="menu">							
+							<li><div class="fb-share-button" data-href="http://kailarhomes.appspot.com" data-type="button_count"></div></li>
+							<li><div class="g-plus" data-action="share"></div></li>
+						</ul>
+						
 					</div>
-				
+					
 			</div>
 
 	</body>
