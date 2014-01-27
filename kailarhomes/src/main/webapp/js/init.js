@@ -4,6 +4,10 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+/* Code Changes 
+	27/01/2014 - dbugged - Added smooth scroll
+*/
+
 /*********************************************************************************/
 /* Settings                                                                      */
 /*********************************************************************************/
@@ -247,6 +251,26 @@
 						// Set this link to active
 							jQuery(this).addClass('active');
 					});
+				
+				
+			//dbugged - Added the below code to enable smooth scrolling on clicking 'Mail' icon
+				var $mail_link = jQuery('#mail-link');
+				
+			// debugged - Scrollyfy
+				$mail_link
+						.n33_scrolly()
+						.click(function(e) {
+					
+					e.preventDefault();
+					
+					// debugged - Clear active and lock scrollzer until scrolling has stopped
+					$mail_link
+							.removeClass('active')
+							.addClass('scrollzer-locked');
+				
+					// debugged - Set this link to active
+						jQuery(this).addClass('active');
+				});
 
 			// Initialize scrollzer
 				var ids = [];
@@ -256,5 +280,16 @@
 				});
 				
 				jQuery.n33_scrollzer(ids, { pad: 200, lastHack: true });
+			
+				
+			// debugged - Initialize scrollzer
+				var ids2 = [];
+				$mail_link.each(function() {
+					ids2.push(jQuery(this).attr('href').substring(1));
+				});
+				
+				jQuery.n33_scrollzer(ids2, { pad: 200, lastHack: true });
+				
+			
 
 	});
