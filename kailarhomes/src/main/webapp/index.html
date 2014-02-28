@@ -17,13 +17,11 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
-		<script src="js/lightbox-2.6.min.js"></script>
 		<script type="text/javascript" src="js/facebook.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
-			<link href="css/lightbox.css" rel="stylesheet" />
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
@@ -57,7 +55,7 @@
 			
 			
 			$.ajax({
-				url:"http://localhost:8080/photos",
+				url:"/photos",
 				type:'GET',
 				success:function(data){
 					
@@ -74,7 +72,7 @@
 						
 						var respContent = '<div class="4u"> <article class="item">';
 						
-			    		respContent +=	'<a href="'+url+'" class="image full" data-lightbox="kailar" title="'+caption+'">';
+			    		respContent +=	'<a href="'+url+'" class="image full" title="'+caption+'">';
 			    		respContent +=  '<img src= "'+url+'" alt="" /></a>';
 			    		respContent +=	'<header><h3>'+caption+'</h3></header></article></div>';
 						
