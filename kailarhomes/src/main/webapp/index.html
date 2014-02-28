@@ -17,14 +17,17 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
+		<script src="js/lightbox-2.6.min.js"></script>
 		<script type="text/javascript" src="js/facebook.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
+			<link href="css/lightbox.css" rel="stylesheet" />
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
+		
 	</head>
 	<body>
 		<!-- FB Root Goes Here -->
@@ -44,6 +47,52 @@
 		    po.src = 'https://apis.google.com/js/plusone.js';
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 		  })();
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function(){
+			
+
+	/*dbugged - 01/03/2014 Fetching images from picasa*/
+			
+			
+			$.ajax({
+				url:"http://localhost:8080/photos",
+				type:'GET',
+				success:function(data){
+					
+					var jsonData = $.parseJSON(data);
+					
+					var urls = jsonData.URL;
+					var captions = jsonData.CAPTION;
+					
+					var albumData = "";
+					
+					for(var i in urls){
+						var url = urls[i];
+						var caption = captions[i];
+						
+						var respContent = '<div class="4u"> <article class="item">';
+						
+			    		respContent +=	'<a href="'+url+'" class="image full" data-lightbox="kailar" title="'+caption+'">';
+			    		respContent +=  '<img src= "'+url+'" alt="" /></a>';
+			    		respContent +=	'<header><h3>'+caption+'</h3></header></article></div>';
+						
+						albumData += respContent;
+					}
+					
+					$("#album").html(albumData);
+					
+				},
+				error:function(data,status,er){
+					alert("error: "+data+" status: "+status+" er:"+er);
+				}
+			});
+			
+
+	    });
+			
+			 
 		</script>
 						
 		<!-- Header -->
@@ -125,8 +174,8 @@
 							Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis 
 							fusce hendrerit lacus ridiculus.</p>
 						
-							<div class="row">
-								<div class="4u">
+							<div id="album" class="row">
+						<!--  		<div class="4u">
 									<article class="item">
 										<a href="http://en.wikipedia.org/wiki/Shooting_range" class="image full"><img src="images/pic02.jpg" alt="" /></a>
 										<header>
@@ -167,10 +216,9 @@
 											<h3>Seasonal Fest</h3>
 										</header>
 									</article>
-								</div>
+								</div> -->
+							</div> 
 							</div>
-
-						</div>
 					</section>
 
 				<!-- About Us -->
