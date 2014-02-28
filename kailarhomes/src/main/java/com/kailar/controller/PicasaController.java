@@ -8,7 +8,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 
 
@@ -61,16 +63,16 @@ public class PicasaController {
 	}
 
 
-	
+	//Fetching photo URLs and captions and passing it to the HTML as JSON String
 	@RequestMapping("/photos")
-	public ModelAndView getPhotos(){
+	public @ResponseBody String getPhotos(){
 
 		List<PhotoEntry>  photoEntries = null;
 
 		photoEntries = this.getPhotoEntries("");
 
 		JSONArray urls = new JSONArray();
-		JSONObject titles = new JSONObject();
+		JSONArray titles = new JSONArray();
 		for (int i = 0; i < photoEntries.size(); i++) {
 			PhotoEntry photo = photoEntries.get(i);
 			if(photo != null){
@@ -80,10 +82,12 @@ public class PicasaController {
 					if (mediaContent!=null && mediaContent.getUrl()!=null) {
 						String url = mediaContent.getUrl();
 						if(url.endsWith("jpg")||url.endsWith("JPG")){
+							System.out.println("URL: "+url);
 							urls.add(url);
 							String caption = photo.getDescription().getPlainText();
 							if(caption!=null){
-								titles.put(url,caption);
+								System.out.println("Caption: "+caption);
+								titles.add(caption);
 							}
 						}
 					}
@@ -94,8 +98,10 @@ public class PicasaController {
 		JSONObject output = new JSONObject();
 		output.put("URL", urls);
 		output.put("CAPTION", titles);
+		
+		System.out.println(output.toJSONString());
 
-		return new ModelAndView("index", "photos", output);
+		return output.toJSONString();
 	}
 
 }
