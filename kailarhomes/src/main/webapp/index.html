@@ -55,12 +55,36 @@
 			
 
 	/*dbugged - 01/03/2014 Fetching images from picasa*/
+	
+	$("#album").empty();
+	
+	var $album = $('#album');
+   	var albumCss = {
+		pleft:  $album.css('padding-left'),
+		fsize: $album.css('font-size'),
+    };
+   	
+   	var aitemcss = $("article.item").css("width");
+	
+	
+	
+		var respContent = '<div class="4u"> <article class="item">';
+					
+		    	//	respContent +=	'<a href="#" class="image full" title="">';
+		    	//	respContent +=  '<img src= "#" alt="" class="colorbox" /></a>';
+		    		respContent +=	'<h4>Loading images...</h4></article></div>';
+		    		$("#album").css("padding-left","96pt");
+		    		$("#album").css("font-size","12pt");
+		    		$("#album").html(respContent);
+		    		$("article.item").css("width","512pt");
 			
 			
 			$.ajax({
 				url:"/photos",
 				type:'GET',
 				success:function(data){
+					
+					$("#album").empty();
 					
 					var jsonData = $.parseJSON(data);
 					
@@ -79,6 +103,10 @@
 			    		respContent +=	'<a href="'+url+'" class="image full" title="'+caption+'">';
 			    		respContent +=  '<img src= "'+url+'" alt="" class="colorbox" /></a>';
 			    		respContent +=	'<header><h3>'+caption+'</h3></header></article></div>';
+			    		$("#album").css("padding-left",albumCss.pleft);
+			    		$("#album").css("font-size",albumCss.fsize);
+			    		$("#album").html(respContent);
+			    		$("article.item").css("width",aitemcss);
 						
 						albumData += respContent;
 					}
@@ -92,6 +120,8 @@
 					
 				},
 				error:function(data,status,er){
+					
+					$("#album").empty();
 					
 					var respContent = '<div class="4u"> <article class="item">';
 					
