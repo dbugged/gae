@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kailar.constants.MailConstants;
 
 
+
 @Controller
 @RequestMapping("/mail")
 public class MailController {
@@ -40,18 +41,20 @@ public class MailController {
 			@RequestParam(value = "email", required = false) String email,
 			HttpServletResponse response, ModelMap model) throws IOException {
 
+
+
 		//For error handling
 		model.addAttribute("email", email);
 		model.addAttribute("adminMail", MailConstants.KAILAR_HOMES_EMAIL);
 		model.addAttribute("description",description);
 		model.addAttribute("name",name);
-		
+
 		/******** E-Mail ********/
 		try {
 			//Sending automated response to the user!
-			sendUserResponseMail(name,email);
+						sendUserResponseMail(name,email);
 			//Sending automated mail to the admin!
-			sendMailToAdmin(name,email,description);
+					sendMailToAdmin(name,email,description);
 			logger.info("Mail sent to : '"+email+"' and admin!");
 		} catch (Exception e) {
 			//To redirect the request to the error handling page	
@@ -59,7 +62,7 @@ public class MailController {
 			return "email-error";
 		}
 		/******** E-Mail ********/
-		
+
 		//To redirect the request to the index.html
 		return "redirect:../";
 	}
@@ -74,7 +77,7 @@ public class MailController {
 		}else{
 			strBuilder.append("Hi "+name+",\n");
 		}
-		
+
 		strBuilder.append("\t Thank you for contacting us! We will get back to you soon.\n");
 		strBuilder.append("\t Have a nice day!!!\n");
 		strBuilder.append(MailConstants.ADMIN_SALUTATION);
